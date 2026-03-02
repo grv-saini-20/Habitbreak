@@ -2,7 +2,7 @@ import  express from "express";
 import dotenv from "dotenv";
 import connectDb from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
-import { notFound } from "./middleware/errorMiddleware.js";
+import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 dotenv.config();
 connectDb();
@@ -22,5 +22,6 @@ app.listen(PORT, () => {
 });
 
 app.use(notFound);
+app.use(errorHandler);
 
 export default app;
