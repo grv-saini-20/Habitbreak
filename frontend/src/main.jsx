@@ -4,11 +4,24 @@ import './index.css'
 import App from './App.jsx'
 import { Provider } from 'react-redux'
 import store from './store'
+import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom'
+import { RouterProvider } from 'react-router'
+import Habits from './pages/Habits'
+import Register from './pages/Register'
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<App/>}>
+      <Route index element={<Habits/>}/>
+      <Route path="/register" element={<Register/>}/>
+    </Route>
+  )
+)
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
-    <App />
+    <RouterProvider router={router}/>
     </Provider>
   </StrictMode>,
 )
