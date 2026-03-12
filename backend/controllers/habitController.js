@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Habit from "../models/habitModel.js";
+import HabitLog from "../models/habitLogModel.js";
 
 //@desc create habit
 //@route POST /api/habits/create
@@ -69,5 +70,48 @@ const deleteHabit = asyncHandler(async(req, res) => {
     res.status(201).json({message: "Habit Removed"});
 })
 
-export {createHabit, getAllHabits, updateHabit, deleteHabit};
+//@desc complete habit
+//@route /api/habits/:id/complete
+//@access private
+const completeHabit = asyncHandler(async (req, res) => {
+    const habit = await Habit.findById(req.params.id);
+
+    if (!habit) {
+        res.status(404);
+        throw new Error("Habit not found");
+    }
+
+    const today = new Date().toISOString().split("T")[0];
+
+    const existing = await HabitLog.findOne({
+        habit: habit._id,
+        date: today
+    });
+
+    if (existing) {
+        res.status(400);
+        throw new Error("Habit already completed today");
+    }
+
+    await HabitLog.create({
+        habit: habit._id,
+        date: today,
+        completed: true
+    });
+
+    habit.currentStreak += 1;
+
+    if (habit.currentStreak > habit.longestStreak) {
+        habit.longestStreak = habit.currentStreak;
+    }
+
+    await habit.save();
+
+    res.status(201).json({
+        message: "Habit completed",
+        streak: habit.currentStreak
+    });
+});
+
+export {createHabit, getAllHabits, updateHabit, deleteHabit, completeHabit};
 
