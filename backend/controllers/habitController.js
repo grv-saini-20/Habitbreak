@@ -1,5 +1,5 @@
-import Habit from "../models/habitModel";
 import asyncHandler from "express-async-handler";
+import Habit from "../models/habitModel.js";
 
 //@desc create habit
 //@route POST /api/habits/create
@@ -18,4 +18,12 @@ const createHabit = asyncHandler(async(req, res) => {
     res.status(201).json(habit);
 })
 
-export {createHabit};
+//@desc create habit
+//@route GET /api/habits
+//@access Private
+const getAllHabits = asyncHandler(async(req,res) => {
+    const habits = await Habit.find({user: req.user._id});
+    res.status(201).json(habits);
+})
+
+export {createHabit, getAllHabits};

@@ -1,9 +1,10 @@
 import express from "express";
-import { createHabit } from "../controllers/habitController";
-import { protect } from "../middleware/authMiddleware";
+import { createHabit, getAllHabits } from "../controllers/habitController.js";
+import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 router.post("/create", protect, createHabit);
+router.get("/", protect, getAllHabits);
 
 export default router;
