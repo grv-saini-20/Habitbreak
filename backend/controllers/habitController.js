@@ -26,4 +26,48 @@ const getAllHabits = asyncHandler(async(req,res) => {
     res.status(201).json(habits);
 })
 
-export {createHabit, getAllHabits};
+//@desc update habit
+//@route PATCH /api/habit/:id
+//@access private
+const updateHabit = asyncHandler(async(req, res) => {
+    const habit = await Habit.findById(req.params.id);
+
+    if(!habit) {
+        res.status(404);
+        throw new Error("Habit not found");
+    }
+
+    if(habit.user._id.toString() !== req.user._id.toString()) {
+        res.status(401);
+        throw new Error("Not Authorized");
+    }
+
+    habit.title = req.body.title || habit.title;
+    habit.description = req.body.description || habit.description;
+
+    const updatedHabit = await habit.save();
+    res.status(201).json(updatedHabit);
+})
+
+//@desc delete habit
+//@route DELETE /api/habits/:id
+//@access private 
+const deleteHabit = asyncHandler(async(req, res) => {
+    const habit = await Habit.findById(req.params.id);
+
+    if(!habit) {
+        res.status(404);
+        throw new Error("Habit not found");
+    }
+
+    if(habit.user._id.toString() !== req.user._id.toString()) {
+        res.status(401);
+        throw new Error("Not Authorized");
+    }
+
+    await habit.deleteOne();
+    res.status(201).json({message: "Habit Removed"});
+})
+
+export {createHabit, getAllHabits, updateHabit, deleteHabit};
+
