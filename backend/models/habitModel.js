@@ -21,7 +21,7 @@ const habitSchema = new mongoose.Schema (
 
         type : {
             type: String,
-            enum: ["good", "bad"],
+            enum: ["build", "break"],
             required: true
         },
 
