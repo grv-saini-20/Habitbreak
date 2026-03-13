@@ -1,4 +1,4 @@
-import { Home, ListTodo } from "lucide-react"
+import { Home, ListTodo, Settings, LogOut } from "lucide-react"
 import { NavLink } from "react-router-dom"
 
 import {
@@ -10,10 +10,23 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-
-// import { ModeToggle } from "@/components/mode-toggle"
+import { useDispatch } from "react-redux"
+import { useLogoutMutation } from "@/services/usersApi";
+import { logout as userLogout } from "@/services/authSlice";
 
 export function AppSidebar() {
+  const dispatch = useDispatch();
+  const [logout] = useLogoutMutation();
+  
+  const handleLogout = async() => {
+    try {
+      await logout();
+      dispatch(userLogout());
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
   return (
     <Sidebar className={"p-6 bg-sidebar"}>
 
@@ -22,12 +35,11 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent>
-
         <SidebarMenu>
 
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
-              <NavLink to="/">
+              <NavLink to="/dashboard">
                 <Home />
                 Dashboard
               </NavLink>
@@ -44,11 +56,30 @@ export function AppSidebar() {
           </SidebarMenuItem>
 
         </SidebarMenu>
-
       </SidebarContent>
 
       <SidebarFooter>
-        {/* <ModeToggle /> */}
+        <SidebarMenu>
+
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <NavLink to="/settings">
+                <Settings />
+                Settings
+              </NavLink>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              onClick={handleLogout}
+            >
+              <LogOut />
+              Logout
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+
+        </SidebarMenu>
       </SidebarFooter>
 
     </Sidebar>

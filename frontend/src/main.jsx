@@ -10,11 +10,13 @@ import Habits from './pages/Habits'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import PrivateRoute from './components/project/PrivateRoute'
+import Dashboard from './pages/Dashboard'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App/>}>
       <Route element={<PrivateRoute/>}>
+        <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="/habits"  element={<Habits/>}/>
       </Route>
       <Route path="/register" element={<Register/>}/>
