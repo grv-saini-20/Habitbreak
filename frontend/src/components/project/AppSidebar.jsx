@@ -15,7 +15,7 @@ import {
 
 export function AppSidebar() {
   return (
-    <Sidebar className={"p-6"}>
+    <Sidebar>
 
       <SidebarHeader>
         <h2 className="text-lg font-semibold">HabitBreak</h2>
