@@ -20,6 +20,7 @@ function AddHabitModal() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [habitType, setHabitType] = useState("build");
+  const [frequency, setFrequency] = useState("daily");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +29,7 @@ function AddHabitModal() {
       title,
       description,
       type: habitType,
+      frequency
     });
 
     setTitle("");
@@ -68,6 +70,15 @@ function AddHabitModal() {
           >
             <option value="build">Build Habit</option>
             <option value="break">Break Habit</option>
+          </select>
+
+          <select
+            className="w-full border rounded-md p-2"
+            value={frequency}
+            onChange={(e) => setHabitType(e.target.value)}
+          >
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
           </select>
 
           <Button type="submit" className="w-full">

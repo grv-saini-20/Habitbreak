@@ -33,9 +33,15 @@ function HabitCard({ habit }) {
 
         <CardTitle>{habit.title}</CardTitle>
 
-        <Badge variant={habit.habitType === "build" ? "default" : "destructive"}>
-          {habit.habitType}
+        <div className="flex gap-2">
+        <Badge variant={habit.type === "build" ? "default" : "destructive"}>
+          {habit.type}
         </Badge>
+
+        <Badge variant={"secondary"}>
+          {habit.frequency}
+        </Badge>
+        </div>
 
       </CardHeader>
 

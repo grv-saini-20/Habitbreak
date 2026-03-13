@@ -5,7 +5,7 @@ export const habitApiSlice = apiSlice.injectEndpoints({
         //get all habits
         getHabits: builder.query({
             query: () => "/habits",
-            providedTags: ["Habit"]
+            providesTags: ["Habit"]
         }),
         //create a new habit
         createHabit: builder.mutation({

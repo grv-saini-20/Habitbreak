@@ -15,10 +15,10 @@ import {
 
 export function AppSidebar() {
   return (
-    <Sidebar>
+    <Sidebar className={"p-6 bg-sidebar"}>
 
       <SidebarHeader>
-        <h2 className="text-lg font-semibold">HabitBreak</h2>
+        <h2 className="text-2xl font-bold">HabitBreak</h2>
       </SidebarHeader>
 
       <SidebarContent>
