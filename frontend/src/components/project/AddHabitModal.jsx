@@ -8,6 +8,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,6 +23,7 @@ import { useCreateHabitMutation } from "@/services/habitApi";
 
 function AddHabitModal() {
   const [createHabit] = useCreateHabitMutation();
+  const [open, setOpen] = useState(false);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -34,10 +42,11 @@ function AddHabitModal() {
 
     setTitle("");
     setDescription("");
+    setOpen(false);
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
 
       <DialogTrigger asChild>
         <Button>Add Habit</Button>
@@ -63,23 +72,27 @@ function AddHabitModal() {
             onChange={(e) => setDescription(e.target.value)}
           />
 
-          <select
-            className="w-full border rounded-md p-2"
-            value={habitType}
-            onChange={(e) => setHabitType(e.target.value)}
-          >
-            <option value="build">Build Habit</option>
-            <option value="break">Break Habit</option>
-          </select>
+         <Select value={habitType} onValueChange={setHabitType}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select frequency" />
+            </SelectTrigger>
 
-          <select
-            className="w-full border rounded-md p-2"
-            value={frequency}
-            onChange={(e) => setHabitType(e.target.value)}
-          >
-            <option value="daily">Daily</option>
-            <option value="weekly">Weekly</option>
-          </select>
+            <SelectContent>
+              <SelectItem value="Build">Build</SelectItem>
+              <SelectItem value="Break">Break</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Select value={frequency} onValueChange={setFrequency}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select frequency" />
+            </SelectTrigger>
+
+            <SelectContent>
+              <SelectItem value="daily">Daily</SelectItem>
+              <SelectItem value="weekly">Weekly</SelectItem>
+            </SelectContent>
+          </Select>
 
           <Button type="submit" className="w-full">
             Create Habit
