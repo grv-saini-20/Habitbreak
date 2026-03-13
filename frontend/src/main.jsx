@@ -11,6 +11,7 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import PrivateRoute from './components/project/PrivateRoute'
 import Dashboard from './pages/Dashboard'
+import NotFound from './pages/NotFound'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
       </Route>
       <Route path="/register" element={<Register/>}/>
       <Route path="/login" element={<Login/>}/>
+      <Route path="*" element={<NotFound/>}/>
     </Route>
   )
 )

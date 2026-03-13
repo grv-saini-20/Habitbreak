@@ -20,7 +20,7 @@ export function AppSidebar() {
   
   const handleLogout = async() => {
     try {
-      await logout();
+      await logout().unwrap();
       dispatch(userLogout());
     } catch (error) {
       console.log(error);
