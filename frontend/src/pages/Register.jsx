@@ -31,7 +31,7 @@ function Register() {
 
     try {
       await register(form).unwrap();
-      navigate("/");
+      navigate("/habits");
     } catch (err) {
       console.error(err);
     }

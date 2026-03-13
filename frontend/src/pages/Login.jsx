@@ -8,10 +8,13 @@ import { Button } from "@/components/ui/button";
 import AuthLayout from "@/components/layouts/AuthLayout";
 
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "@/services/authSlice";
 
 function Login() {
   const navigate = useNavigate();
   const [Login] = useLoginMutation();
+  const dispatch = useDispatch();
 
   const [form, setForm] = useState({
     name: "",
@@ -30,8 +33,9 @@ function Login() {
     e.preventDefault();
 
     try {
-      await Login(form).unwrap();
-      navigate("/");
+      const data = await Login(form).unwrap();
+      dispatch(setCredentials(data))
+      navigate("/habits");
     } catch (err) {
       console.error(err);
     }
