@@ -34,7 +34,7 @@ function Login() {
 
     try {
       const data = await Login(form).unwrap();
-      dispatch(setCredentials(data))
+      dispatch(setCredentials(data));
       navigate("/habits");
     } catch (err) {
       console.error(err);

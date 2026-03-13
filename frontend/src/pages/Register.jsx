@@ -8,10 +8,13 @@ import { Button } from "@/components/ui/button";
 import AuthLayout from "@/components/layouts/AuthLayout";
 
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "@/services/authSlice";
 
 function Register() {
   const navigate = useNavigate();
   const [register] = useRegisterMutation();
+  const dispatch = useDispatch();
 
   const [form, setForm] = useState({
     name: "",
@@ -30,7 +33,8 @@ function Register() {
     e.preventDefault();
 
     try {
-      await register(form).unwrap();
+      const data = await register(form).unwrap();
+      dispatch(setCredentials(data));
       navigate("/habits");
     } catch (err) {
       console.error(err);
