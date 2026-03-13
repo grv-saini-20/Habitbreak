@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useRegisterMutation } from "@/services/usersApi";
+import { useLoginMutation } from "@/services/usersApi";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,9 +9,9 @@ import AuthLayout from "@/components/layouts/AuthLayout";
 
 import { useNavigate } from "react-router-dom";
 
-function Register() {
+function Login() {
   const navigate = useNavigate();
-  const [register] = useRegisterMutation();
+  const [Login] = useLoginMutation();
 
   const [form, setForm] = useState({
     name: "",
@@ -30,7 +30,7 @@ function Register() {
     e.preventDefault();
 
     try {
-      await register(form).unwrap();
+      await Login(form).unwrap();
       navigate("/");
     } catch (err) {
       console.error(err);
@@ -38,18 +38,9 @@ function Register() {
   };
 
   return (
-    <AuthLayout title="Create an account">
+    <AuthLayout title="Enter Details to Login">
 
       <form onSubmit={handleSubmit} className="space-y-4">
-
-        <div>
-          <Label className={"mb-1"}>Name</Label>
-          <Input
-            name="name"
-            placeholder="Enter your name"
-            onChange={handleChange}
-          />
-        </div>
 
         <div>
           <Label className={"mb-1"}>Email</Label>
@@ -72,7 +63,7 @@ function Register() {
         </div>
 
         <Button className="w-full">
-          Register
+          Login
         </Button>
 
       </form>
@@ -81,4 +72,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Login;

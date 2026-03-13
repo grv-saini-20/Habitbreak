@@ -8,12 +8,14 @@ import { createBrowserRouter, createRoutesFromElements, Route } from 'react-rout
 import { RouterProvider } from 'react-router'
 import Habits from './pages/Habits'
 import Register from './pages/Register'
+import Login from './pages/Login'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App/>}>
       <Route index element={<Habits/>}/>
       <Route path="/register" element={<Register/>}/>
+      <Route path="/login" element={<Login/>}/>
     </Route>
   )
 )

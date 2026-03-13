@@ -11,7 +11,7 @@ function AuthLayout({ title, children }) {
             {title}
           </CardTitle>
         </CardHeader>
-
+        
         <CardContent>
           {children}
         </CardContent>
