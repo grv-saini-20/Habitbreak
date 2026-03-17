@@ -78,8 +78,8 @@ function AddHabitModal() {
             </SelectTrigger>
 
             <SelectContent>
-              <SelectItem value="Build">Build</SelectItem>
-              <SelectItem value="Break">Break</SelectItem>
+              <SelectItem value="build">Build</SelectItem>
+              <SelectItem value="break">Break</SelectItem>
             </SelectContent>
           </Select>
 

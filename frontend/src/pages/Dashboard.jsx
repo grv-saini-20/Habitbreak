@@ -1,3 +1,4 @@
+import {useState, useEffect} from "react";
 import DashboardLayout from "@/components/layouts/DashboardLayout"
 import {
   Card,
@@ -7,6 +8,7 @@ import {
 } from "@/components/ui/card"
 
 import { Progress } from "@/components/ui/progress"
+import { useGetHabitsQuery } from "@/services/habitApi"
 
 import {
   LineChart,
@@ -28,6 +30,13 @@ const data = [
 ]
 
 export default function Dashboard() {
+  const { data: habits, isLoading } = useGetHabitsQuery();
+  const [completedHabits, setCompletedHabits] = useState();
+
+  useEffect(() => {
+    console.log(habits);
+  })
+
   return (
     <DashboardLayout>
     <div className="flex-1 p-8 space-y-6">
@@ -45,7 +54,7 @@ export default function Dashboard() {
             <CardTitle>Total Habits</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold">12</p>
+            <p className="text-3xl font-bold">{habits?.length || 0}</p>
           </CardContent>
         </Card>
 
