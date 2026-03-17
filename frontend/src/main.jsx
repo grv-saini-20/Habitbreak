@@ -12,6 +12,7 @@ import Login from './pages/Login'
 import PrivateRoute from './components/project/PrivateRoute'
 import Dashboard from './pages/Dashboard'
 import NotFound from './pages/NotFound'
+import HabitDetails from "./pages/HabitDetails"
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
       <Route element={<PrivateRoute/>}>
         <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="/habits"  element={<Habits/>}/>
+        <Route path="/habits/:id" element={<HabitDetails/>}/>
       </Route>
       <Route path="/register" element={<Register/>}/>
       <Route path="/login" element={<Login/>}/>

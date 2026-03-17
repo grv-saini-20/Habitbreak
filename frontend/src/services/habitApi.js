@@ -16,6 +16,11 @@ export const habitApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ["Habit"]
         }),
+        //get Habit by id
+        getHabit: builder.query({
+            query: (id) => `/habits/${id}`,
+            providesTags:["Habit"]
+        }),
         //update habit
         updateHabit: builder.mutation({
             query: ({id, ...data}) => ({
@@ -48,6 +53,7 @@ export const habitApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetHabitsQuery,
   useCreateHabitMutation,
+  useGetHabitQuery,
   useUpdateHabitMutation,
   useDeleteHabitMutation,
   useCompleteHabitMutation,

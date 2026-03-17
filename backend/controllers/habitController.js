@@ -24,7 +24,7 @@ const createHabit = asyncHandler(async(req, res) => {
 //@access Private
 const getAllHabits = asyncHandler(async(req,res) => {
     const habits = await Habit.find({user: req.user._id});
-    res.status(201).json(habits);
+    res.status(200).json(habits);
 })
 
 //@desc update habit
@@ -50,6 +50,25 @@ const updateHabit = asyncHandler(async(req, res) => {
     res.status(201).json(updatedHabit);
 })
 
+//@desc get habit
+//@route GET /api/habits/:id
+//@access private
+const getHabit = asyncHandler(async(req, res) => {
+    const habit = await Habit.findById(req.params.id);
+
+    if(!habit) {
+        res.status(404);
+        throw new Error("Habit not found");
+    }
+
+    if(habit.user._id.toString() !== req.user._id.toString()) {
+        res.status(401);
+        throw new Error("Not Autherised");
+    }
+
+    res.status(200).json(habit);
+})
+
 //@desc delete habit
 //@route DELETE /api/habits/:id
 //@access private 
@@ -67,7 +86,7 @@ const deleteHabit = asyncHandler(async(req, res) => {
     }
 
     await habit.deleteOne();
-    res.status(201).json({message: "Habit Removed"});
+    res.status(200).json({message: "Habit Removed"});
 })
 
 //@desc complete habit
@@ -113,5 +132,5 @@ const completeHabit = asyncHandler(async (req, res) => {
     });
 });
 
-export {createHabit, getAllHabits, updateHabit, deleteHabit, completeHabit};
+export {createHabit, getAllHabits, getHabit, updateHabit, deleteHabit, completeHabit};
 

@@ -13,10 +13,14 @@ import {
   useDeleteHabitMutation,
   useCompleteHabitMutation,
 } from "@/services/habitApi";
+import { ArrowBigRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function HabitCard({ habit }) {
   const [deleteHabit] = useDeleteHabitMutation();
   const [completeHabit] = useCompleteHabitMutation();
+
+  const navigate = useNavigate();
 
   const handleComplete = async () => {
     await completeHabit(habit._id);
@@ -25,6 +29,10 @@ function HabitCard({ habit }) {
   const handleDelete = async () => {
     await deleteHabit(habit._id);
   };
+
+  const handleCardDetail= () => {
+    navigate(`/habits/${habit._id}`)
+  }
 
   return (
     <Card>
@@ -57,14 +65,19 @@ function HabitCard({ habit }) {
 
       </CardContent>
 
-      <CardFooter className="flex gap-2">
-
+      <CardFooter className="flex justify-between">
+        <div className="flex gap-2">
         <Button onClick={handleComplete}>
           Complete
         </Button>
 
         <Button variant="destructive" onClick={handleDelete}>
           Delete
+        </Button>
+        </div>
+
+        <Button variant="icon" onClick={handleCardDetail}>
+          <ArrowBigRight/>
         </Button>
 
       </CardFooter>
