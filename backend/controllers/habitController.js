@@ -45,6 +45,7 @@ const updateHabit = asyncHandler(async(req, res) => {
 
     habit.title = req.body.title || habit.title;
     habit.description = req.body.description || habit.description;
+    habit.currentStreak = req.body.currentStreak || habit.currentStreak;
 
     const updatedHabit = await habit.save();
     res.status(201).json(updatedHabit);
@@ -112,13 +113,33 @@ const completeHabit = asyncHandler(async (req, res) => {
         throw new Error("Habit already completed today");
     }
 
+    const lastLog = await HabitLog.findOne({ habit: habit._id })
+        .sort({ date: -1 });
+
+    let newStreak = 1;
+
+    if (lastLog) {
+        const lastDate = new Date(lastLog.date);
+        const currentDate = new Date(today);
+
+        const diffDays = Math.floor(
+            (currentDate - lastDate) / (1000 * 60 * 60 * 24)
+        );
+
+        if (diffDays === 1) {
+            newStreak = habit.currentStreak + 1;
+        } else if (diffDays > 1) {
+            newStreak = 1;
+        }
+    }
+
     await HabitLog.create({
         habit: habit._id,
         date: today,
         completed: true
     });
 
-    habit.currentStreak += 1;
+    habit.currentStreak = newStreak;
 
     if (habit.currentStreak > habit.longestStreak) {
         habit.longestStreak = habit.currentStreak;

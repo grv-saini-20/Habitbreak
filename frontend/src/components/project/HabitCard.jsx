@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import {
   useDeleteHabitMutation,
   useCompleteHabitMutation,
+  useUpdateHabitMutation,
 } from "@/services/habitApi";
 import { ArrowBigRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
