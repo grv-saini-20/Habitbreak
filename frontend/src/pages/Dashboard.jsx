@@ -33,6 +33,7 @@ const data = [
 export default function Dashboard() {
   const { data: habits, isLoading } = useGetHabitsQuery();
   const [completedHabits, setCompletedHabits] = useState([]);
+  const [consistency, setConsistency] = useState(0);
 
   useEffect(() => {
   const today = new Date().toDateString();
@@ -41,6 +42,9 @@ export default function Dashboard() {
   });
 
   setCompletedHabits(completed);
+
+  const progress = (completed?.length/habits?.length) * 100;
+  setConsistency(progress);
 }, [habits]);
 
   return (
@@ -88,9 +92,9 @@ export default function Dashboard() {
             <CardTitle>Consistency</CardTitle>
           </CardHeader>
           <CardContent>
-            <Progress value={70} />
+            <Progress value={consistency} />
             <p className="text-sm mt-2 text-muted-foreground">
-              70% completion
+              {consistency}% completion
             </p>
           </CardContent>
         </Card>

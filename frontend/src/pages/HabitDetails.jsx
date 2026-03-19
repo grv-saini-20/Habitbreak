@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 import {
   Card,
@@ -19,12 +19,13 @@ import {
   useDeleteHabitMutation,
 } from "@/services/habitApi";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
+import { useNavigate } from "react-router-dom"; 
 
 export default function HabitDetails() {
   const { id } = useParams();
+  const Navigate = useNavigate();
 
   const { data: habit, isLoading } = useGetHabitQuery(id);
-  console.log(habit);
   const [completeHabit] = useCompleteHabitMutation();
   const [deleteHabit] = useDeleteHabitMutation();
 
@@ -96,7 +97,7 @@ export default function HabitDetails() {
             Mark Complete
           </Button>
 
-          <Button variant="destructive" onClick={() => deleteHabit(id)}>
+          <Button variant="destructive" onClick={() => {deleteHabit(id), Navigate("/habits")}}>
             Delete
           </Button>
 
