@@ -18,6 +18,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts"
+import { Loader } from "lucide-react";
 
 const data = [
   { day: "Mon", completed: 2 },
@@ -44,6 +45,7 @@ export default function Dashboard() {
 
   return (
     <DashboardLayout>
+    {isLoading ? <div className="min-h-screen w-full flex items-center justify-center"><Loader/></div> :
     <div className="flex-1 p-8 space-y-6">
         <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">
@@ -128,6 +130,7 @@ export default function Dashboard() {
       </Card>
 
     </div>
+    }
     </DashboardLayout>
   )
 }
