@@ -31,11 +31,16 @@ const data = [
 
 export default function Dashboard() {
   const { data: habits, isLoading } = useGetHabitsQuery();
-  const [completedHabits, setCompletedHabits] = useState();
+  const [completedHabits, setCompletedHabits] = useState([]);
 
   useEffect(() => {
-    console.log(habits);
-  })
+  const today = new Date().toDateString();
+  const completed = habits?.filter(item => {
+    return new Date(item.updatedAt).toDateString() === today;
+  });
+
+  setCompletedHabits(completed);
+}, [habits]);
 
   return (
     <DashboardLayout>
@@ -63,7 +68,7 @@ export default function Dashboard() {
             <CardTitle>Completed Today</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold">5</p>
+            <p className="text-3xl font-bold">{completedHabits?.length || 0}</p>
           </CardContent>
         </Card>
 
